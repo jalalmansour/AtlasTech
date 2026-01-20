@@ -12,7 +12,7 @@ import time
 import logging
 import os
 import subprocess
-from ..config import Config
+from config import Config
 
 logger = logging.getLogger("AtlasTech.Provisioner")
 

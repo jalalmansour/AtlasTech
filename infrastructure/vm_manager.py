@@ -10,7 +10,7 @@ import logging
 import atexit
 import subprocess
 import os
-from ..config import Config
+from config import Config
 
 # Try importing pyVmomi, handle if not present (dev environment)
 try:
