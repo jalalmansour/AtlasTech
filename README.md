@@ -1,14 +1,14 @@
 <div align="center">
 
 <!-- Animated Header -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=AtlasTech%20Security%20Framework&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=Advanced%20Penetration%20Testing%20%26%20Infrastructure%20Control%20Platform&descSize=18&descAlignY=52"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=AtlasTech%20Security%20Framework&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=Enterprise%20Penetration%20Testing%20%26%20Infrastructure%20Control&descSize=18&descAlignY=52"/>
 
 <!-- Badges -->
 <p>
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/VMware-Workstation-607078?style=for-the-badge&logo=vmware&logoColor=white"/>
   <img src="https://img.shields.io/badge/Windows_Server-2025-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CLI-Professional-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white"/>
 </p>
 
 <p>
@@ -56,7 +56,7 @@
 
 ## 🌟 Overview
 
-**AtlasTech Security Framework** is a comprehensive, fully automated penetration testing and infrastructure control platform designed for authorized security assessments. It provides complete control over VMware environments, deploys intentionally vulnerable applications for testing, and features a premium dark-themed command center dashboard.
+**AtlasTech Security Framework** is an enterprise-grade, CLI-driven penetration testing and infrastructure control platform. Designed for professional security assessments, it provides robust automation for VMware environments, deploys intentionally vulnerable applications, and executes precise attack vectors through a unified terminal interface.
 
 <div align="center">
 
@@ -73,8 +73,8 @@
 │          └──────────────────┴──────────────────┘                │
 │                             │                                   │
 │                    ┌────────▼────────┐                          │
-│                    │    Dashboard    │                          │
-│                    │  Command Center │                          │
+│                    │   CLI Console   │                          │
+│                    │  (root@atlas)   │                          │
 │                    └─────────────────┘                          │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
@@ -88,12 +88,12 @@
 
 <div align="center">
 
-| 🖥️ VM Control | 🌐 Vulnerable App | ⚔️ Attack Suite | 📊 Dashboard |
+| 🖥️ VM Control | 🌐 Vulnerable App | ⚔️ Attack Suite | 💻 CLI Console |
 |:-------------:|:-----------------:|:---------------:|:------------:|
-| Start/Stop VMs | SQL Injection | SSH Brute Force | Dark Theme |
-| Snapshot Mgmt | IDOR Flaws | Password Spray | VM Control |
-| IP Detection | XSS Vectors | Network Scan | Reports |
-| Script Exec | CSRF Missing | Data Exfil | Real-time |
+| Start/Stop VMs | SQL Injection | SSH Brute Force | Logging & Audits |
+| Snapshot Mgmt | IDOR Flaws | Password Spray | Robust Error Handling |
+| IP Detection | XSS Vectors | Network Scan | Git Sync Integration |
+| Script Exec | CSRF Missing | Data Exfil | Automation Ready |
 
 </div>
 
@@ -125,23 +125,10 @@
 <details>
 <summary><b>⚔️ Attack Suite</b></summary>
 
-- 🔍 Network reconnaissance with Nmap
-- 🔐 SSH brute force attacks
-- 💉 Automated SQL injection testing
-- 🌊 Password spray attacks
-- 📡 ARP spoofing capabilities
-- 📸 Automatic screenshot capture
-
-</details>
-
-<details>
-<summary><b>📊 Premium Dashboard</b></summary>
-
-- 🌙 Dark theme with gradients
-- 📈 Real-time metrics & status
-- 🎮 VM control panel
-- 🔍 Reconnaissance interface
-- 📄 Report generation
+- 🔍 Professional Reconnaissance with Nmap Integration
+- 🔐 SSH Brute Force (Multi-threaded)
+- 💉 Automated SQL Injection Detection
+- ⚙️ Automated Logging and Reporting
 
 </details>
 
@@ -155,6 +142,7 @@
 # Python 3.10+
 # VMware Workstation (with vmrun.exe)
 # Windows Server 2025 VM
+# Nmap (Added to System PATH)
 ```
 
 ### Installation
@@ -173,18 +161,18 @@ pip install -r requirements.txt
 
 ### Usage
 
+**Launch the Interactive Console:**
+```bash
+python main.py
+```
+
+**Automated Deployment:**
+```bash
+python main.py --deploy
+```
+
 <div align="center">
-
-| Command | Description |
-|---------|-------------|
-| `python automate.py --full` | 🎯 Complete automation workflow |
-| `python automate.py --vm-start` | ▶️ Start the target VM |
-| `python automate.py --vm-stop` | ⏹️ Stop the target VM |
-| `python automate.py --deploy` | 📂 Deploy vulnerable app |
-| `python automate.py --dashboard` | 🖥️ Launch command center |
-| `python automate.py --git` | 📤 Sync to GitHub |
-| `python automate.py --screenshot` | 📸 Capture screenshot |
-
+<img src="https://via.placeholder.com/800x450/1a1a3e/00ff00?text=AtlasTech+CLI+Console" alt="CLI Console" width="80%"/>
 </div>
 
 ---
@@ -193,49 +181,23 @@ pip install -r requirements.txt
 
 ```
 AtlasTech/
-├── 🎯 automate.py              # Master automation controller
+├── 🎯 main.py                  # CLI Entry Point & Controller
 ├── ⚙️ config.py                # Configuration settings
 ├── 📋 requirements.txt         # Python dependencies
 │
 ├── 📂 infrastructure/
 │   ├── 🖥️ vm_manager.py       # VMware control via vmrun
-│   ├── 🔧 provisioner.py      # Windows deployment
-│   └── 📸 screenshot.py       # Auto-capture utility
-│
-├── 📂 dashboard/
-│   └── 🎨 app.py              # Streamlit command center
+│   └── 🔧 provisioner.py      # Windows deployment
 │
 ├── 📂 webapp/rh_crud/          # Vulnerable HR Application
 │   ├── 🔐 login.php           # Auth bypass (SQLi)
-│   ├── ➕ add.php             # Insert injection
-│   ├── ✏️ edit.php            # IDOR + SQLi
-│   ├── 🗑️ delete.php          # Delete injection
 │   ├── 📄 index.php           # Employee listing
-│   ├── 🎨 style.css           # Glassmorphism design
-│   ├── ⚙️ config.php          # DB credentials
 │   └── 🗄️ setup.sql           # Database schema
 │
 └── 📂 attack_suite/
-    ├── 🔍 recon.py            # Network scanning
-    ├── ⚔️ exploits.py         # Attack modules
-    └── 🌐 network_control.py  # ARP spoofing
+    ├── 🔍 recon.py            # Reconnaissance Scanner (Nmap)
+    └── ⚔️ exploits.py         # Exploitation Modules
 ```
-
----
-
-## 🎨 Screenshots
-
-<div align="center">
-
-### 🖥️ Command Center Dashboard
-
-<img src="https://via.placeholder.com/800x450/1a1a3e/ffffff?text=AtlasTech+Command+Center" alt="Dashboard" width="80%"/>
-
-### 🌐 Vulnerable HR Application
-
-<img src="https://via.placeholder.com/800x450/667eea/ffffff?text=HR+Portal+with+Glassmorphism+UI" alt="HR App" width="80%"/>
-
-</div>
 
 ---
 
@@ -256,29 +218,6 @@ AtlasTech/
 
 ---
 
-## 🛠️ Technologies
-
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=python,php,mysql,html,css,git,github,windows,linux" />
-
-</div>
-
-<div align="center">
-
-| Category | Technologies |
-|:--------:|:------------|
-| **Backend** | Python 3.10+, PHP 8.x |
-| **Frontend** | Streamlit, HTML5, CSS3 |
-| **Database** | MySQL / MariaDB |
-| **Virtualization** | VMware Workstation |
-| **Target OS** | Windows Server 2025 |
-| **Tools** | Nmap, Scapy, Paramiko |
-
-</div>
-
----
-
 ## 📜 License
 
 <div align="center">
@@ -286,23 +225,6 @@ AtlasTech/
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge"/>
-
-</div>
-
----
-
-## 🤝 Contributing
-
-<div align="center">
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-<a href="https://github.com/jalalmansour/AtlasTech/issues">
-  <img src="https://img.shields.io/badge/Report_Bug-FF0000?style=for-the-badge&logo=github"/>
-</a>
-<a href="https://github.com/jalalmansour/AtlasTech/issues">
-  <img src="https://img.shields.io/badge/Request_Feature-00C853?style=for-the-badge&logo=github"/>
-</a>
 
 </div>
 
@@ -324,13 +246,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 <!-- Animated Footer -->
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer"/>
-
-<p>
-  <b>⭐ Star this repo if you find it useful!</b>
-</p>
-
-<p>
-  Made with ❤️ by <a href="https://github.com/jalalmansour"><b>Jalal Mansour</b></a> 🇲🇦
-</p>
 
 </div>

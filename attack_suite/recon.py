@@ -1,80 +1,84 @@
 """
 Reconnaissance Module
 ---------------------
-Performs network scanning and service enumeration.
+Professional network scanning and service enumeration module.
+Requires Nmap binary to be installed and available in PATH.
 """
 
 import sys
 import logging
-import json
-
-# Handle python-nmap dependency
-try:
-    import nmap
-    NMAP_AVAILABLE = True
-except ImportError:
-    NMAP_AVAILABLE = False
+import shutil
+import nmap
 
 logger = logging.getLogger("AtlasTech.Recon")
 
 class ReconScanner:
     def __init__(self, target_range):
         self.target_range = target_range
-        self.nm = nmap.PortScanner() if NMAP_AVAILABLE else None
+        
+        # Verify Nmap Installation
+        if not shutil.which("nmap"):
+            logger.critical("Nmap binary not found in system PATH.")
+            raise EnvironmentError("Nmap is required but not installed.")
+            
+        try:
+            self.nm = nmap.PortScanner()
+        except nmap.PortScannerError as e:
+            logger.critical(f"Nmap PortScanner instantiation failed: {e}")
+            raise
 
     def scan_network(self):
-        """Performs a ping scan to find live hosts"""
-        logger.info(f"Scanning network: {self.target_range}")
+        """
+        Performs a host discovery scan (Ping Scan).
+        Returns a list of dictionaries with IP, MAC, and Vendor.
+        """
+        logger.info(f"Initiating Host Discovery on {self.target_range}...")
         
-        if not NMAP_AVAILABLE:
-            logger.warning("python-nmap not installed. Returning MOCK data.")
-            return self._get_mock_scan()
-
         try:
             # -sn: Ping Scan - disable port scan
-            self.nm.scan(hosts=self.target_range, arguments='-sn')
+            # -PE: ICMP Echo
+            self.nm.scan(hosts=self.target_range, arguments='-sn -PE')
             hosts = []
+            
             for host in self.nm.all_hosts():
                 if self.nm[host].state() == 'up':
-                    hosts.append({
+                    mac = self.nm[host]['addresses'].get('mac', 'N/A')
+                    vendor = self.nm[host]['vendor'].get(mac, 'Unknown Vendor')
+                    
+                    host_info = {
                         'ip': host,
-                        'mac': self.nm[host]['addresses'].get('mac', 'Unknown'),
-                        'vendor': self.nm[host]['vendor'].get(self.nm[host]['addresses'].get('mac', ''), '')
-                    })
+                        'mac': mac,
+                        'vendor': vendor
+                    }
+                    hosts.append(host_info)
+                    logger.debug(f"Host found: {host} ({vendor})")
+                    
+            logger.info(f"Scan complete. Found {len(hosts)} live hosts.")
             return hosts
+            
         except Exception as e:
-            logger.error(f"Scan failed: {e}")
+            logger.error(f"Network scan failed: {e}")
             return []
 
     def scan_host(self, ip):
-        """Detailed port scan of a single host"""
-        logger.info(f"Deep scanning {ip}...")
+        """
+        Detailed service version and OS detection scan on a single host.
+        """
+        logger.info(f"Starting Deep Scan on {ip}...")
         
-        if not NMAP_AVAILABLE:
-            return self._get_mock_host_scan(ip)
-
         try:
-            self.nm.scan(ip, arguments='-sV -sC -p 22,80,443,3306')
+            # -sV: Version detection
+            # -O: OS detection
+            # -T4: Aggressive timing
+            self.nm.scan(ip, arguments='-sV -O -T4')
+            
             if ip not in self.nm.all_hosts():
+                logger.warning(f"Deep scan returned no data for {ip}.")
                 return {}
             
+            logger.info(f"Deep Scan finished for {ip}.")
             return self.nm[ip]
+            
         except Exception as e:
             logger.error(f"Host scan failed: {e}")
             return {}
-
-    def _get_mock_scan(self):
-        return [
-            {'ip': '192.168.1.1', 'mac': 'AA:BB:CC:DD:EE:01', 'vendor': 'Cisco'},
-            {'ip': '192.168.1.100', 'mac': 'AA:BB:CC:DD:EE:02', 'vendor': 'VMware'},
-            {'ip': '192.168.1.105', 'mac': 'AA:BB:CC:DD:EE:03', 'vendor': 'VMware (Target)'},
-        ]
-
-    def _get_mock_host_scan(self, ip):
-        return {
-            'tcp': {
-                22: {'state': 'open', 'name': 'ssh', 'product': 'OpenSSH', 'version': '7.2p2'},
-                80: {'state': 'open', 'name': 'http', 'product': 'Apache', 'version': '2.4.18'},
-                3306: {'state': 'open', 'name': 'mysql', 'product': 'MariaDB', 'version': '10.0.38'}
-            }
-        }
