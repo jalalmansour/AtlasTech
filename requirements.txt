@@ -1,0 +1,7 @@
+paramiko
+pyvmomi
+streamlit
+scapy
+requests
+python-nmap
+pandas
