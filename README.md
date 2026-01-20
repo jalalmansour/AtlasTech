@@ -58,6 +58,18 @@
 
 **AtlasTech Security Framework** is an enterprise-grade, CLI-driven penetration testing and infrastructure control platform. Designed for professional security assessments, it provides robust automation for VMware environments, deploys intentionally vulnerable applications, and executes precise attack vectors through a unified terminal interface.
 
+### 🖼️ Architecture & Design
+
+<div align="center">
+  <img src="docs/assets/atlastech_architecture_diagram.png" alt="Architecture Diagram" width="800px"/>
+  <br>
+  <em>Secure Network Segmentation: DMZ vs Legacy Isolation</em>
+  <br><br>
+  <img src="docs/assets/atlastech_landing_page_mockup.png" alt="Landing Page Mockup" width="800px"/>
+  <br>
+  <em>Modern Digital Front-End (Next.js)</em>
+</div>
+
 <div align="center">
 
 ```
