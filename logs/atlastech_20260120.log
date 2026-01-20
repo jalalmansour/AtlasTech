@@ -6,3 +6,7 @@
 2026-01-20 17:24:14,812 [INFO] recon: Initiating Host Discovery on https://chat.z.ai/c/bd9c2307-15ee-4520-ba56-a758fd7fc409...
 2026-01-20 17:24:15,016 [INFO] recon: Scan complete. Found 0 live hosts.
 2026-01-20 17:24:15,019 [WARNING] main: No hosts discovered.
+2026-01-20 17:24:54,323 [INFO] exploits: Starting SSH Brute Force against http://0.0.0.0:8501/
+2026-01-20 17:24:54,329 [ERROR] exploits: Wordlist not found. Using small default list.
+2026-01-20 17:25:12,961 [INFO] main: Initializing Git Repository...
+2026-01-20 17:25:25,360 [INFO] main: Repository setup complete.

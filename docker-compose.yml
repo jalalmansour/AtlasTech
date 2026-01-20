@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Next.js Application (The Secure "After" State)
+  next-app:
+    build:
+      context: ./webapp/nextjs-app
+      dockerfile: Dockerfile
+    container_name: atlas_secure_app
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend-net
+      - backend-net
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://atlas_user:secure_password@postgres:5432/atlas_db?schema=public
+      - AUTH_SECRET=super_secret_auth_key_replace_in_production
+      - NEXTAUTH_URL=http://localhost:3000
+
+  # Secure Database (PostgreSQL)
+  postgres:
+    image: postgres:15-alpine
+    container_name: atlas_secure_db
+    restart: always
+    environment:
+      POSTGRES_USER: atlas_user
+      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: atlas_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-net
+      # Isolated from frontend-net
+
+      # Legacy Vulnerable App (The "Before" State / Simulation Target)
+  legacy-php:
+    image: php:7.4-apache
+    container_name: atlas_legacy_vulnerable
+    ports:
+      - "8080:80"
+    volumes:
+      - ./webapp/rh_crud:/var/www/html
+    networks:
+      - legacy-net
+    depends_on:
+      - legacy-db
+
+  legacy-db:
+    image: mysql:5.7
+    container_name: atlas_legacy_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rh_cne
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./webapp/rh_crud/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    networks:
+      - legacy-net
+
+networks:
+  frontend-net:
+    # Public Internet facing
+    driver: bridge
+  backend-net:
+    # Internal Application Logic
+    driver: bridge
+    internal: true # No internet access (strictly speaking, but we need it for build sometimes. For sim: isolate)
+  legacy-net:
+    # Completely separate network for the vulnerable app
+    driver: bridge
+
+volumes:
+  postgres_data:
