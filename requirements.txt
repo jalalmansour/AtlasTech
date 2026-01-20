@@ -5,3 +5,7 @@ scapy
 requests
 python-nmap
 pandas
+pyautogui
+pillow
+pywinrm
+pyserial
